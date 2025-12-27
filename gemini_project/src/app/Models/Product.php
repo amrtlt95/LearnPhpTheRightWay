@@ -7,10 +7,12 @@ namespace App\Models;
 
 use App\Interfaces\ShippableInterface;
 use DateTimeImmutable;
+    use App\Exceptions\ProductException;
+    use App\Traits\HasTimestamps;
 
 class Product extends BaseEntity implements ShippableInterface
 {
-    use \App\Traits\HasTimestamps;
+    use HasTimestamps;
 
     // Class Constant (I-103)
     private const TAX_RATE = 0.15;
@@ -29,6 +31,9 @@ class Product extends BaseEntity implements ShippableInterface
     {
         $this->initializeTimestamps();
         $this->id = uniqid();
+        if ($price < 0) {
+            throw ProductException::invalidAmount();
+        }
     }
 
     public function getName(): string

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Models\Product;
 use App\Models\AdminUser;
 use App\Interfaces\PaymentProcessorInterface;
+use App\Exceptions\ProductException;
 
 // $product1 = new Product("HP zbook 17 g1", 50, 0);
 // $product2 = new Product("HP zbook 17 g2", 100, 3000);
@@ -68,13 +69,26 @@ use App\Interfaces\PaymentProcessorInterface;
 
 // echo $paymentGateway->processPayment($sum) . PHP_EOL;
 
-// $store->createLogger()->log("Payment of $sum processed successfully.");
-$originalProduct = new Product("Hp zbook 17", 150, 0);
+// // $store->createLogger()->log("Payment of $sum processed successfully.");
+// $originalProduct = new Product("Hp zbook 17", 150, 0);
 
-$str = serialize($originalProduct);
+// $str = serialize($originalProduct);
 
-$unserlizedProduct = unserialize($str);
+// $unserlizedProduct = unserialize($str);
 
-// var_dump($originalProduct, $str, $unserlizedProduct);
+// // var_dump($originalProduct, $str, $unserlizedProduct);
 
-var_dump($originalProduct, $unserlizedProduct, $originalProduct == $unserlizedProduct, $originalProduct === $unserlizedProduct);
+// var_dump($str);
+
+set_exception_handler(function ($e) {
+    echo "Uncaught Exception: " . $e->getMessage() . PHP_EOL;
+});
+
+
+try {
+    $product = new Product("Test Product", (100 / 0), 10);
+} catch (ProductException $e) {
+    echo "Product Exception Caught: " . $e->getMessage() . PHP_EOL;
+} finally {
+    echo "Execution completed." . PHP_EOL;
+}
