@@ -80,15 +80,36 @@ use App\Exceptions\ProductException;
 
 // var_dump($str);
 
-set_exception_handler(function ($e) {
-    echo "Uncaught Exception: " . $e->getMessage() . PHP_EOL;
-});
+// set_exception_handler(function ($e) {
+//     echo "Uncaught Exception: " . $e->getMessage() . PHP_EOL;
+// });
 
 
-try {
-    $product = new Product("Test Product", (100 / 0), 10);
-} catch (ProductException $e) {
-    echo "Product Exception Caught: " . $e->getMessage() . PHP_EOL;
-} finally {
-    echo "Execution completed." . PHP_EOL;
-}
+// try {
+//     $product = new Product("Test Product", (100 / 0), 10);
+// } catch (ProductException $e) {
+//     echo "Product Exception Caught: " . $e->getMessage() . PHP_EOL;
+// } finally {
+//     echo "Execution completed." . PHP_EOL;
+
+// }
+
+
+$dateFormatting = "d-m-o g:i:s A";
+$product = new Product("Test Product", 100, 10);
+
+
+// echo "the product is created in UTC time: " . $product->getCreatedAtInTimezone("UTC")->format($dateFormatting) . PHP_EOL;
+// echo "the product is created in Cairo time: " . $product->getCreatedAtInTimezone()->format($dateFormatting) . PHP_EOL;
+
+$product->applyDiscountExpiry("25/12/2024 (14:30)");
+echo "Discount expiry date: " . $product->discountExpiry->format($dateFormatting) . PHP_EOL;
+
+
+
+
+$product->applyDiscountExpiry("25/12/2025");
+echo "Discount expiry date: " . $product->discountExpiry->format($dateFormatting) . PHP_EOL;
+
+
+echo $product->timeLeftForDiscount() . PHP_EOL;

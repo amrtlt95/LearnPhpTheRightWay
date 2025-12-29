@@ -3,11 +3,12 @@
 namespace App\Traits;
 
 use DateTimeImmutable;
+use DateTimeZone;
 
 trait HasTimestamps
 {
-    private DateTimeImmutable $createdAt;
-    private DateTimeImmutable $updatedAt;
+    public DateTimeImmutable $createdAt;
+    public DateTimeImmutable $updatedAt;
 
     public function updateTimestamp(): void
     {
