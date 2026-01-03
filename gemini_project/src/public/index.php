@@ -95,21 +95,30 @@ use App\Exceptions\ProductException;
 // }
 
 
-$dateFormatting = "d-m-o g:i:s A";
-$product = new Product("Test Product", 100, 10);
+// $dateFormatting = "d-m-o g:i:s A";
+// $product = new Product("Test Product", 100, 10);
 
 
-// echo "the product is created in UTC time: " . $product->getCreatedAtInTimezone("UTC")->format($dateFormatting) . PHP_EOL;
-// echo "the product is created in Cairo time: " . $product->getCreatedAtInTimezone()->format($dateFormatting) . PHP_EOL;
+// // echo "the product is created in UTC time: " . $product->getCreatedAtInTimezone("UTC")->format($dateFormatting) . PHP_EOL;
+// // echo "the product is created in Cairo time: " . $product->getCreatedAtInTimezone()->format($dateFormatting) . PHP_EOL;
 
-$product->applyDiscountExpiry("25/12/2024 (14:30)");
-echo "Discount expiry date: " . $product->discountExpiry->format($dateFormatting) . PHP_EOL;
-
-
+// $product->applyDiscountExpiry("25/12/2024 (14:30)");
+// echo "Discount expiry date: " . $product->discountExpiry->format($dateFormatting) . PHP_EOL;
 
 
-$product->applyDiscountExpiry("25/12/2025");
-echo "Discount expiry date: " . $product->discountExpiry->format($dateFormatting) . PHP_EOL;
 
 
-echo $product->timeLeftForDiscount() . PHP_EOL;
+// $product->applyDiscountExpiry("25/12/2025");
+// echo "Discount expiry date: " . $product->discountExpiry->format($dateFormatting) . PHP_EOL;
+
+
+// echo $product->timeLeftForDiscount() . PHP_EOL;
+
+$product1 = new Product("HP zbook 17 g1", 50, 0);
+$product2 = new Product("HP zbook 17 g2", 100, 3000);
+$product3 = new Product("HP zbook 17 g4", 300, 10000);
+    $productCollection = new App\Models\ProductCollection([$product1, $product2, $product3]);
+foreach ($productCollection as $product) {
+    echo "Product Name: " . $product->getName() . ", Price: " . $product->getFinalPrice() . PHP_EOL;
+}
+;
