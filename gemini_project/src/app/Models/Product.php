@@ -139,4 +139,9 @@ class Product extends BaseEntity implements ShippableInterface
         }
         return null;
     }
+
+    public static function staticMethod(): string
+    {
+        return "This is a static method.";
+    }
 }

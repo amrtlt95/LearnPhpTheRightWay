@@ -6,7 +6,9 @@ use App\Models\Product;
 use App\Models\AdminUser;
 use App\Interfaces\PaymentProcessorInterface;
 use App\Exceptions\ProductException;
+use App\Models\Router;
 
+/*
 // $product1 = new Product("HP zbook 17 g1", 50, 0);
 // $product2 = new Product("HP zbook 17 g2", 100, 3000);
 // $product3 = new Product("HP zbook 17 g4", 300, 10000);
@@ -114,11 +116,109 @@ use App\Exceptions\ProductException;
 
 // echo $product->timeLeftForDiscount() . PHP_EOL;
 
-$product1 = new Product("HP zbook 17 g1", 50, 0);
-$product2 = new Product("HP zbook 17 g2", 100, 3000);
-$product3 = new Product("HP zbook 17 g4", 300, 10000);
-    $productCollection = new App\Models\ProductCollection([$product1, $product2, $product3]);
-foreach ($productCollection as $product) {
-    echo "Product Name: " . $product->getName() . ", Price: " . $product->getFinalPrice() . PHP_EOL;
-}
-;
+// $product1 = new Product("HP zbook 17 g1", 50, 0);
+// $product2 = new Product("HP zbook 17 g2", 100, 3000);
+// $product3 = new Product("HP zbook 17 g4", 300, 10000);
+//     $productCollection = new App\Models\ProductCollection([$product1, $product2, $product3]);
+// foreach ($productCollection as $product) {
+//     echo "Product Name: " . $product->getName() . ", Price: " . $product->getFinalPrice() . PHP_EOL;
+// }
+// ;
+
+/*
+
+The Return Mystery: Create a function runCallback(callable $c). Inside it, just call $c(). Then, try to assign the result: $result = runCallback(fn() => "Hello");. Research why $result is null and what happens when you add return before $c().
+*/
+
+// $result = Router::testCalllingNonStaticFunction();
+// $result2 = Router::testCallingStaticFunction();
+// echo $result . PHP_EOL;
+// echo $result2 . PHP_EOL;
+
+
+/*
+
+Symmetric Array Destructuring: Try this in a script: [$a, $b] = [10, 20]; echo $a;. Then, try to use it to "swap" variables: [$a, $b] = [$b, $a];. Research when this syntax was introduced to PHP. PHP symmetric array destructuring, list() vs []
+XII-1204    Dynamic Instantiation: Store your product class name in a variable: $name = 'App\Models\Product';. Now, try $obj = new $name("Laptop", 1000, 5);. Research how PHP knows which class to create even though the name is just a string.   PHP variable classes, dynamic instantiation
+XII-1205    The "Array" Version of Calls: Look up call_user_func_array. Create a function that takes 3 arguments. Try calling it using an array [1, 2, 3] instead of passing them individually. Research why the "invoker" must return the result of this call. PHP call_user_func_array vs call_user_func
+XII-1206    The Simple Router: Implement the Router class from the video. It should use $_SERVER['REQUEST_URI'] to decide which "Controller" class and method to run.   PHP Router implementation, REQUEST_URI
+
+
+
+
+
+
+
+
+
+Symmetric Array Destructuring:
+Try this in a script: [$a, $b] = [10, 20];
+ echo $a;.
+ Then, try to use it to "swap" variables: [$a, $b] = [$b, $a];. Research when this syntax was introduced to PHP.
+
+*/
+
+
+// [$a , $b] = [10, 20];
+// echo $a . PHP_EOL; // 10
+
+
+// [$a , $b] = [$b , $a];
+// echo $a . PHP_EOL; // 20
+
+
+// echo          $b . PHP_EOL; // 10
+
+
+
+
+
+// /*
+
+// Dynamic Instantiation: Store your product class name in a variable: $name = 'App\Models\Product';. Now, try $obj = new $name("Laptop", 1000, 5);. Research how PHP knows which class to create even though the name is just a string.
+// */
+
+// $name = "App\Models\Product";
+// $obj = new $name("Laptop", 1000, 5);
+// var_dump($obj);
+
+
+
+// The "Array" Version of Calls: Look up call_user_func_array. Create a function that takes 3 arguments. Try calling it using an array [1, 2, 3] instead of passing them individually. Research why the "invoker" must return the result of this call.
+
+
+
+// function sumThreeNumbers($a, $b, $c)
+// {
+//     return $a + $b + $c;
+// }
+
+// $a = call_user_func_array(fn($a, $b, $c) => $a + $b + $c, [10, 20, 30]);
+
+
+// echo $a . PHP_EOL; // 60
+
+
+
+// The Simple Router: Implement the Router class from the video. It should use $_SERVER['REQUEST_URI'] to decide which "Controller" class and method to run.
+
+
+
+// echo "<pre>";
+// print_r($_SERVER);
+// echo "</pre>";
+
+$router = new Router();
+
+$router->get('/', [App\Models\HomeController::class, 'index'])
+        ->get("/register", [App\Models\UserController::class, 'register'])
+        ->post("/register", [App\Models\UserController::class, 'handleRegister']);
+
+    echo $router->resolve(strtolower($_SERVER['REQUEST_METHOD']), $_SERVER['REQUEST_URI']);
+
+
+// try {
+//     echo $router->resolve($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+// } catch (\Throwable $e) {
+//     echo "Error: " . $e->getMessage();
+// }
