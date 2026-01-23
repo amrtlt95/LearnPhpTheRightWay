@@ -1,12 +1,18 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+// echo "Hello";
+
+session_start();
 
 use App\Models\Product;
 use App\Models\AdminUser;
 use App\Interfaces\PaymentProcessorInterface;
 use App\Exceptions\ProductException;
 use App\Models\Router;
+
+
+define("STORAGE", __DIR__ . "/../storage/");
 
 /*
 // $product1 = new Product("HP zbook 17 g1", 50, 0);
@@ -208,13 +214,16 @@ Try this in a script: [$a, $b] = [10, 20];
 // print_r($_SERVER);
 // echo "</pre>";
 
-$router = new Router();
+$router = new router();
 
 $router->get('/', [App\Models\HomeController::class, 'index'])
         ->get("/register", [App\Models\UserController::class, 'register'])
-        ->post("/register", [App\Models\UserController::class, 'handleRegister']);
+        ->post("/register", [App\Models\UserController::class, 'handleRegister'])
+        ->post("/upload", [App\Models\HomeController::class, 'upload']);
 
     echo $router->resolve(strtolower($_SERVER['REQUEST_METHOD']), $_SERVER['REQUEST_URI']);
+
+
 
 
 // try {

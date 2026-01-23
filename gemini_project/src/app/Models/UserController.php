@@ -9,6 +9,12 @@ class UserController
     public function register()
     {
 
+        session_destroy();
+
+          echo "<pre>";
+           print_r($_SESSION);
+           echo "</pre>";
+
 
         return "<form method='POST' action='/handleRegister'>
                     <input type='text' name='username' placeholder='Username'/>
