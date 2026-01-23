@@ -13,6 +13,7 @@ use App\Models\Router;
 
 
 define("STORAGE", __DIR__ . "/../storage/");
+define("VIEWS", __DIR__ . "/../views/");
 
 /*
 // $product1 = new Product("HP zbook 17 g1", 50, 0);
@@ -216,10 +217,9 @@ Try this in a script: [$a, $b] = [10, 20];
 
 $router = new router();
 
-$router->get('/', [App\Models\HomeController::class, 'index'])
-        ->get("/register", [App\Models\UserController::class, 'register'])
-        ->post("/register", [App\Models\UserController::class, 'handleRegister'])
-        ->post("/upload", [App\Models\HomeController::class, 'upload']);
+$router->get('/', [App\Controllers\HomeController::class, 'index'])
+        ->get("/register", [App\Controllers\UserController::class, 'register'])
+        ->post("/register", [App\Controllers\UserController::class, 'handleRegister']);
 
     echo $router->resolve(strtolower($_SERVER['REQUEST_METHOD']), $_SERVER['REQUEST_URI']);
 
