@@ -17,6 +17,7 @@ class UserController
     public function handleRegister()
     {
 
-        return View::make("Users/handleRegister");
+        header("Location: /");
+        exit();
     }
 }

@@ -9,7 +9,9 @@ use App\Models\Product;
 use App\Models\AdminUser;
 use App\Interfaces\PaymentProcessorInterface;
 use App\Exceptions\ProductException;
+use App\Exceptions\RouteNotFoundException;
 use App\Models\Router;
+use App\View;
 
 
 define("STORAGE", __DIR__ . "/../storage/");
@@ -215,15 +217,19 @@ Try this in a script: [$a, $b] = [10, 20];
 // print_r($_SERVER);
 // echo "</pre>";
 
-$router = new router();
+try {
+    $router = new router();
 
-$router->get('/', [App\Controllers\HomeController::class, 'index'])
-        ->get("/register", [App\Controllers\UserController::class, 'register'])
-        ->post("/register", [App\Controllers\UserController::class, 'handleRegister']);
+    $router->get('/', [App\Controllers\HomeController::class, 'index'])
+    ->get("/register", [App\Controllers\UserController::class, 'register'])
+    ->post("/register", [App\Controllers\UserController::class, 'handleRegister'])
+    ->get('/download', [App\Controllers\HomeController::class, 'download']);
 
     echo $router->resolve(strtolower($_SERVER['REQUEST_METHOD']), $_SERVER['REQUEST_URI']);
-
-
+} catch (RouteNotFoundException $e) {
+    http_response_code(404);
+    echo  View::make("Errors/404");
+}
 
 
 // try {

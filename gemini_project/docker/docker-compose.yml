@@ -26,6 +26,19 @@ services:
     networks:
       - app-network
 
+  db:
+    image: mysql
+    container_name: mysql_db
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+    - app-network
+
 networks:
   app-network:
     driver: bridge
