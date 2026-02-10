@@ -43,6 +43,8 @@ class HomeController
 
         // $db->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, true);
 
+        $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
 
         $id = 7;
         $user = $db->query('SELECT * FROM users WHERE id =' . $id);
